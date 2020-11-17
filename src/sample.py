@@ -7,12 +7,14 @@ from diagrams.aws.network import ELB
 
 def main():
     """Main entrypoint"""
-    with Diagram("Sample", show=False, direction="TB", filename="img/sample"):
-        ELB("lb") >> [EC2("worker1"),
-                      EC2("worker2"),
-                      EC2("worker3"),
-                      EC2("worker4"),
-                      EC2("worker5")] >> RDS("events")
+    with Diagram(
+        "Sample Architecture Diagram",
+        direction="TB",
+        filename="img/sample",
+        show=False,
+    ):
+        workers = [EC2(f"EC2\nworker{i + 1}") for i in range(5)]
+        ELB("ELB") >> workers >> RDS("RDS\ndata warehouse")
 
 
 if __name__ == "__main__":
